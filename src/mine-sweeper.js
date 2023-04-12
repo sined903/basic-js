@@ -23,9 +23,117 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  
+  const result = [];
+
+  //create result arr
+
+  for (let i = 0; i < matrix.length; i++) {
+    let arr = [];
+    for (let j = 0; j < matrix[i].length; j++) {
+      arr.push(0);
+    }
+    result.push(arr)
+  }
+
+  // horizontally
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+       
+      if (j === 0) {
+        if(matrix[i][j + 1] === true) {
+          result[i][j]++
+        }
+      } else if (j === matrix[i].length - 1) {
+        if(matrix[i][j - 1] === true) {
+          result[i][j]++
+        }
+      } else {
+        if (matrix[i][j + 1] === true) {
+        result[i][j]++
+        } 
+        if (matrix[i][j - 1] === true) {
+        result[i][j]++
+       }
+      }
+    }
+  }
+
+  //vertically
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (i === 0) { 
+        if (matrix[i + 1][j] === true) {
+          result[i][j]++
+        }
+      } else if (i === matrix.length - 1) {
+        if (matrix[i - 1][j] === true) {
+          result[i][j]++
+        }
+      } else {
+        if (matrix[i + 1][j] === true) {
+          result[i][j]++
+        } 
+
+        if (matrix[i - 1][j] === true) {
+          result[i][j]++
+        }
+      }
+    }
+  }
+
+  //diagonal
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+       
+      if (i===0) {
+        if(j === 0) {
+          if (matrix[i+1][j+1] === true) {
+            result[i][j]++
+          }
+        } else if (j === matrix[i].length - 1) {
+          if (matrix[i+1][j-1] === true) {
+            result[i][j]++
+          }
+        }
+      } else if (i === matrix.length - 1) {
+        if(j === 0) {
+          if (matrix[i-1][j+1] === true) {
+            result[i][j]++
+          } 
+        } else if (j === matrix[i].length - 1) {
+          if (matrix[i-1][j-1] === true) {
+            result[i][j]++
+          }
+        }
+      } else {
+
+        if (matrix[i-1][j+1] === true) {
+          result[i][j]++
+        }
+
+        if (matrix[i-1][j-1] === true) {
+          result[i][j]++
+        }
+
+        if (matrix[i+1][j-1] === true) {
+          result[i][j]++
+        }
+
+        if (matrix[i+1][j+1] === true) {
+          result[i][j]++
+        }
+
+      }
+
+    }
+  }
+
+  return result
+
 }
 
 module.exports = {
