@@ -13,10 +13,65 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function transform(arr) {
+
+  if(!Array.isArray(arr)) {
+    throw new Error("'arr' parameter must be an instance of the Array!")
+  }
+
+  const copyArr = arr.slice(0);
+
+  copyArr.forEach((element, index) => {
+
+    if (element === '--discard-next' && typeof copyArr[index + 2] === 'string') {
+      copyArr.splice(index, 1);
+    }
+    
+    if (element === '--discard-prev') {
+
+      if (index !== 0) {
+        copyArr.splice(index - 1, 2);
+      } else {
+        copyArr.splice(index, 1);
+      }
+
+    } 
+    
+    if (element === '--discard-next') {
+
+      if (index !== arr.length - 1) {
+        copyArr.splice(index, 2);
+      } else {
+        copyArr.splice(index, 1);
+      }
+
+    }
+
+    if (element === '--double-next') {
+
+      if (index !== arr.length - 1) {
+        copyArr.splice(index, 1, arr[index + 1])
+      } else {
+        copyArr.splice(index, 1);
+      }
+      
+    } 
+    
+    if (element === '--double-prev') {
+      console.log(copyArr[index])
+      if (index !== 0) {
+        copyArr.splice(index, 1, arr[index - 1])
+      } else {
+        copyArr.splice(index, 1);
+      }
+
+    } 
+  })
+
+  return copyArr
 }
+
+console.log(transform([1, 2, 3, '--discard-next', 1337, '--double-prev', 4, 5]))
 
 module.exports = {
   transform
