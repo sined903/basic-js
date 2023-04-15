@@ -18,9 +18,6 @@ function isMAC48Address(n) {
  return  !/[G-Z]/.test(n);
 }
 
-console.log(isMAC48Address('00-1B-63-84-45-E6'));
-
-
 module.exports = {
   isMAC48Address
 };
